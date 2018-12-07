@@ -72,8 +72,8 @@ case "${TOOL}" in
     ;;
     gomodules)
         cd "${build}"
-        step 'Running Test With: go test -race -v'
-        go test -race -v 2>&1 | patter
+        step 'Running Test With: go test -race -v | patter'
+        go test -race -v 2>&1 | tee -a ${output} | patter
     ;;
     *)
         warn "Testing is not supported for ${TOOL}"
