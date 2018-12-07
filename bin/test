@@ -25,7 +25,9 @@ if [ -f "${build}/.heroku/go/.meta" ]; then
   source "${build}/.heroku/go/.meta"
 fi
 
-export GOPATH="${build}"
+if [[ "${TOOL}" != "gomodules" ]]; then
+    export GOPATH="${build}"
+fi
 export GOROOT="${build}/.heroku/go"
 PATH="${GOPATH}/bin:${GOROOT}/bin:${PATH}"
 
@@ -66,11 +68,9 @@ case "${TOOL}" in
         fi
     ;;
     gomodules)
-        pwd
-        ls
         cd "${build}"
-        ls
-        pwd
+        echo "GOPATH=${GOPATH}"
+        echo "GOROOT=${GOROOT}"
         step 'Running Test With: go test -race -v'
         go test -race -v 2>&1
         step
