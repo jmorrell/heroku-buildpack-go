@@ -66,6 +66,11 @@ case "${TOOL}" in
         fi
     ;;
     gomodules)
+        pwd
+        ls
+        cd "${build}"
+        ls
+        pwd
         step 'Running Test With: go test -race -v'
         go test -race -v 2>&1
         step
