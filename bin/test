@@ -69,15 +69,8 @@ case "${TOOL}" in
     ;;
     gomodules)
         cd "${build}"
-        echo "GOPATH=${GOPATH}"
-        echo "GOROOT=${GOROOT}"
         step 'Running Test With: go test -race -v'
-        go test -race -v 2>&1
-        step
-        if [[ -z "${GO_TEST_SKIP_BENCHMARK}" ]]; then
-            step 'Running Benchmarks With: go test -run=_ -bench=. -benchmem -v $(go list ./... | grep -v /vendor/)'
-            go test -run=_ -bench=. -benchmem -v $(go list ./... | grep -v /vendor/) 2>&1
-        fi
+        go test -race -v 2>&1 | patter
     ;;
     *)
         warn "Testing is not supported for ${TOOL}"
