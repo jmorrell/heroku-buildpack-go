@@ -3,13 +3,13 @@
 
 testpack=$(cd "$(dirname $0)/.." && pwd)
 source "${testpack}/lib/common.sh"
-echo "true" > "${3}/GO_INSTALL_TOOLS_IN_IMAGE"
-case "${TOOL}" in
-  gomodules)
-    echo "false" > "${3}/GO_SETUP_GOPATH_IN_IMAGE"
-  ;;
-  dep|glide|godep|gb|govendor)
-    echo "true" > "${3}/GO_SETUP_GOPATH_IN_IMAGE"
-  ;;
-esac
+
+if [[ "$TOOL" == "gomodules" ]]; then
+  echo "true" > "${3}/GO_INSTALL_TOOLS_IN_IMAGE"
+  echo "true" > "${3}/GO_SETUP_GOPATH_IN_IMAGE"
+else
+  echo "true" > "${3}/GO_INSTALL_TOOLS_IN_IMAGE"
+  echo "true" > "${3}/GO_SETUP_GOPATH_IN_IMAGE"
+fi
+
 ${testpack}/bin/compile "${1}" "${2}" "${3}"
